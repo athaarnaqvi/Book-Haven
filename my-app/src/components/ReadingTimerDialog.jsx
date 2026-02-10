@@ -73,12 +73,14 @@ const ReadingTimerDialog = ({ onClose, curr_book }) => {
     try {
       await fetch(`https://book-haven-or3q.onrender.com/book/${bookId}/update-pages`, {
         method: "PUT",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ pagesRead: Number(pagesRead) }),
       });
 
       const timerResponse = await fetch("https://book-haven-or3q.onrender.com/timer/log", {
         method: "POST",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           reader_id: readerId,

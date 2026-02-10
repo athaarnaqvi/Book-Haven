@@ -43,20 +43,25 @@ app.options(
   }),
 )
 
+app.set("trust proxy", 1);
+
+
 app.use(
   session({
+    name: "bookhaven.sid",
     secret: process.env.SESSION_SECRET || "keyboard cat",
     resave: false,
     saveUninitialized: false,
+    proxy: true,
     cookie: {
-      secure: false, // Set to true in production with HTTPS
-      maxAge: 1000 * 60 * 60 * 24, // 24 hours (1 day)
+      secure: true,        // REQUIRED for HTTPS (Vercel)
       httpOnly: true,
-      sameSite: "lax",
+      sameSite: "none",    // REQUIRED for cross-site cookies
+      maxAge: 1000 * 60 * 60 * 24, // 1 day
     },
-    name: "bookhaven.sid", // Custom session name
-  }),
+  })
 )
+
 
 // Add session debugging middleware
 app.use((req, res, next) => {
